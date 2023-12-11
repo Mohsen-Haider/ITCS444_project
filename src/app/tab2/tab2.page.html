@@ -3,15 +3,48 @@
     <ion-title>
       Tab 2
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/../halls"> Halls </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-label color="primary" style="font-size: 30px; ">All is Required</ion-label>
+  <form [formGroup]="LoginForm" (ngSubmit)="Login(LoginForm.value)">
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+    <ion-item>
+      <ion-input label="Hall Name:" formControlName="name" clearOnEdit="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input label="Hall capacity:" formControlName="capacity" clearOnEdit="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input label="No.Booth fittings:" formControlName="numberOfBoothFiting" clearOnEdit="true"></ion-input>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-input label="contactTeam:" formControlName="contactTeam" clearOnEdit="true"></ion-input>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-checkbox
+        formControlName="avaliability"
+      >Avaliable?</ion-checkbox>
+    </ion-item>
+
+
+    <ion-button
+      expand="block"
+      type="submit"
+      color="warning"
+      [disabled]="!LoginForm.valid"
+      (click)="add()"
+    > Add</ion-button>
+</form>
+
 </ion-content>
