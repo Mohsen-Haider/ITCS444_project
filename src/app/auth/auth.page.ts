@@ -21,7 +21,7 @@ export class AuthPage implements OnInit {
     this.regForm = this.formBuilder.group(
       {
         email: ['', [Validators.required, Validators.email, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
-        password: ['', [Validators.required, Validators.pattern("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-8])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}")]],
+        password: ['', [Validators.required, Validators.pattern("(?=\\D*\\d)(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{8,30}")]],
         confirmPassword: ['', [Validators.required]]
       },
       {
@@ -61,9 +61,11 @@ export class AuthPage implements OnInit {
   async createAccount() {
     console.log(this.isSignUp);
     const loading = await this.loadingCtrl.create();
-    await loading.present();
+
     if (this.regForm?.valid) {
+      await loading.present();
       const user = await this.authService.createAccount(this.regForm.value.email, this.regForm.value.password).catch((error) => {
+        this.presentToast(error.message);
         console.log(error);
         loading.dismiss();
       });
@@ -78,17 +80,18 @@ export class AuthPage implements OnInit {
         loading.dismiss();
       }
     }
+    return;
+
   }
 
   async login() {
     const loading = await this.loadingCtrl.create();
-    loading.present();
     // console.log(this.email + this.password);
     if (this.loginForm.valid) {
-
+      loading.present();
       //  await  loading.dismiss();
       const user = await this.authService.signIn(this.loginForm.value.email, this.loginForm.value.password).catch((err) => {
-        this.presentToast(err)
+        this.presentToast(err.message)
         console.log(err);
         loading.dismiss();
       })
@@ -101,8 +104,10 @@ export class AuthPage implements OnInit {
       }
     } else {
       loading.dismiss();
+
       return console.log('Please provide all the required values');
     }
+    return;
   }
 
   async presentToast(message: undefined) {
