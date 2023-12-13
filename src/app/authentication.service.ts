@@ -50,12 +50,16 @@ export class AuthenticationService {
     return await this.auth.currentUser?.uid;
   }
 
-  async createUserDetails(email: string, id: string) {
+  async createUserDetails(id: string, firstName: string, lastName: string, mobile: string, userRole: string) {
     // return setDoc(doc(this.firestore, 'Users', id), {
     //   'email': email,
     // });
     return await setDoc(doc(this.firestore, 'Users', id), { 
-      email: email,
+      firstName: firstName,
+      lastName: lastName,
+      mobile: mobile,
+      userRole: userRole,
+      reservations: []
       });
 
   }

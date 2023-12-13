@@ -14,6 +14,7 @@ export class AuthPage implements OnInit {
   loginForm!: FormGroup;
 
   public isSignUp: boolean = false;
+  // public userRole: string = '';
 
   constructor(public formBuilder: FormBuilder, public loadingCtrl: LoadingController, public authService: AuthenticationService, public router : Router, private toastController: ToastController) { }
 
@@ -22,7 +23,11 @@ export class AuthPage implements OnInit {
       {
         email: ['', [Validators.required, Validators.email, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
         password: ['', [Validators.required, Validators.pattern("(?=\\D*\\d)(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z]).{8,30}")]],
-        confirmPassword: ['', [Validators.required]]
+        confirmPassword: ['', [Validators.required]],
+        mobile:['', [Validators.required]],
+        firstName:['', [Validators.required]],
+        lastName:['', [Validators.required]],
+        userRole:['', Validators.required],
       },
       {
         validators: this.matchValidator('password', 'confirmPassword')
@@ -63,6 +68,7 @@ export class AuthPage implements OnInit {
     const loading = await this.loadingCtrl.create();
 
     if (this.regForm?.valid) {
+      console.log('Hello');
       await loading.present();
       const user = await this.authService.createAccount(this.regForm.value.email, this.regForm.value.password).catch((error) => {
         this.presentToast(error.message);
@@ -72,7 +78,7 @@ export class AuthPage implements OnInit {
 
       if (user) {
         loading.dismiss();
-        await this.authService.createUserDetails(this.regForm.value.email, user.user.uid);
+        await this.authService.createUserDetails(user.user.uid, this.regForm.value.firstName, this.regForm.value.lastName, this.regForm.value.mobile, this.regForm.value.userRole);
         this.router.navigate(['/tabs']);
       }
       else {

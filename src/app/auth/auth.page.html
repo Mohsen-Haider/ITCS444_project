@@ -31,6 +31,10 @@
         </ion-text>
       </div> -->
       <ion-item>
+        <ion-input formControlName="firstName" placeholder="First Name" class="input" type="text"></ion-input>
+        <ion-input formControlName="lastName" placeholder="Last Name" class="input" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
         <ion-input formControlName="password" placeholder="Password" class="input" type="password" errorText="
         Password must have at least
         1 uppercase letter, 
@@ -43,6 +47,16 @@
       <ion-item>
         <ion-input formControlName="confirmPassword" placeholder="Confirm password" class="input" type="password" errorText="Passwords must match"></ion-input>
         <ion-icon name="lock-closed-outline"></ion-icon>
+      </ion-item>
+      <ion-item>
+        <ion-input formControlName="mobile" placeholder="Mobile" class="input" type="tel" errorText="Please enter your mobile"></ion-input>
+        <ion-icon name="call-outline"></ion-icon>
+      </ion-item>
+      <ion-item>
+        <ion-select aria-label="Fruit" interface="popover" label="user role" formControlName="userRole">
+          <ion-select-option value="client" selected>Client</ion-select-option>
+          <ion-select-option value="attendee">Attendee</ion-select-option>
+        </ion-select>
       </ion-item>
       <ion-button expand="block" (click)="createAccount()">Sign Up</ion-button>
     </div>
