@@ -23,7 +23,11 @@ export class Tab2Page {
     })
   }//constructor
   ngOnInit(){
-    this.sevenDays=this.getNextDays(7); // we use this array to set the limit of the days in the calander 
+         // we use this array to set the limit of the days in the calander 
+    // Call the function to generate the highlighted dates
+    this.sevenDays=this.getNextDays(7);
+    // we need a method to get the blue and red dates from the firebase instead using this static lists
+    this.generateHighlightedDates(this.blueList,this.redList); 
   }
 
   Login(LoginForm:FormGroup){
@@ -53,7 +57,6 @@ export class Tab2Page {
 
   }
 // Mohsen Work 
-  // Header components
   // declaring variables
   tdy=new Date();
   oneWeek=new Date(this.tdy.getFullYear(), this.tdy.getMonth(), this.tdy.getDate()+7);
@@ -67,6 +70,9 @@ export class Tab2Page {
   sortMethod='alHalls';
   options:any;
   sevenDays=[];
+  highlightedDates: any[] = [];
+  blueList = ['2023-12-20', '2023-12-26', '2023-12-28'];// for testing purpose
+  redList = ['2023-12-23', '2023-12-27', '2023-12-29'];// for testing purpose
 // Methods
 
   filterBox(){ // this method created to show and hide the filter 
@@ -145,9 +151,24 @@ export class Tab2Page {
     }
     return arr;
   }
-
-  //  End Header components
+//this method will take two arrays containing dates one for the blue and red dates in the calander and it 
+// will push the vlues of the arrays in the highlightedDates array which we use in datetime in the html 
+generateHighlightedDates(blueArray:any,redArray:any) {
+  for(let i=0; i<blueArray.length; i++){
+    this.highlightedDates.push({
+      date: blueArray[i],
+      textColor: 'var(--ion-color-secondary-contrast)',
+      backgroundColor: 'var(--ion-color-secondary)',
+    })
+    for(let i=0; i<redArray.length; i++){
+      this.highlightedDates.push({
+        date: redArray[i],
+        textColor: '#FFFFFF',
+        backgroundColor: 'rgb(255, 0, 0)',
+      })
+    }
+  }
+}
   //End of Mohsen Work 
-
 
 }

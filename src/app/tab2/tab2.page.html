@@ -8,8 +8,8 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<!-- Mohsen work -->
 <ion-header [translucent]="true">
+  <!-- Mohsen work -->
   <ion-toolbar>
     <ion-title>
       Halls
@@ -34,7 +34,8 @@
           <ion-datetime-button presentation="date" datetime="startDate"></ion-datetime-button>
           <ion-modal [keepContentsMounted]="true" >
             <ng-template>
-          <ion-datetime presentation="date" [min]="oneDayStr" [max]="oneWeekStr" [dayValues]="sevenDays" 
+          <ion-datetime [highlightedDates]="highlightedDates"
+           presentation="date" [min]="oneDayStr" [max]="oneWeekStr" [dayValues]="sevenDays" 
           (ionChange)="onStartDateChange($event)"
           [showDefaultButtons]="true"
           id="startDate"></ion-datetime>
@@ -48,7 +49,8 @@
           <ion-datetime-button presentation="date" datetime="endDate"></ion-datetime-button>
           <ion-modal [keepContentsMounted]="true" >
             <ng-template>
-          <ion-datetime presentation="date" [min]="oneDayStr" [max]="oneWeekStr" [dayValues]="sevenDays" 
+          <ion-datetime [highlightedDates]="highlightedDates"
+           presentation="date" [min]="oneDayStr" [max]="oneWeekStr" [dayValues]="sevenDays" 
           (ionChange)="onEndDateChange($event)"
           [showDefaultButtons]="true"
           id="endDate"></ion-datetime>
