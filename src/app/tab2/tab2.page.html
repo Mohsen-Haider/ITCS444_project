@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" *ngIf="false">
   <ion-toolbar>
     <ion-title>
       Tab 2
@@ -8,8 +8,60 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
+<!-- Mohsen work -->
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Halls
+    </ion-title>
+  </ion-toolbar>
+  <ion-item position="fixed">
+    <ion-searchbar></ion-searchbar>
+    <ion-button fill="clear" (click)="filterBox()"><ion-icon name="filter"></ion-icon></ion-button>
+  </ion-item>
+    <div *ngIf="showfilter">
+      <ion-item>
+        <ion-label>Sort By:</ion-label>
+        <ion-select [(ngModel)]="sortMethod" interface="action-sheet">
+          <ion-select-option  value="alHalls">All halls</ion-select-option>
+          <ion-select-option value="avHalls">Availabe halls</ion-select-option>
+          <ion-select-option value="reHalls">Reserved halls</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>From: </ion-label>
+        <div>
+          <ion-datetime-button presentation="date" datetime="startDate"></ion-datetime-button>
+          <ion-modal [keepContentsMounted]="true" >
+            <ng-template>
+          <ion-datetime presentation="date" [min]="oneDayStr" [max]="oneWeekStr" [dayValues]="sevenDays" 
+          (ionChange)="onStartDateChange($event)"
+          [showDefaultButtons]="true"
+          id="startDate"></ion-datetime>
+      </ng-template>
+      </ion-modal>
+        </div>
+      </ion-item>
+      <ion-item>
+        <ion-label>To: </ion-label>
+        <div>
+          <ion-datetime-button presentation="date" datetime="endDate"></ion-datetime-button>
+          <ion-modal [keepContentsMounted]="true" >
+            <ng-template>
+          <ion-datetime presentation="date" [min]="oneDayStr" [max]="oneWeekStr" [dayValues]="sevenDays" 
+          (ionChange)="onEndDateChange($event)"
+          [showDefaultButtons]="true"
+          id="endDate"></ion-datetime>
+      </ng-template>
+      </ion-modal>
+        </div>
+      </ion-item>
+      <ion-item> <ion-label color="secondary" style="font-weight: 750;">{{result}}</ion-label></ion-item>
+    </div>
+    <!-- End of Mohsen work -->
+</ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" *ngIf="false">
   <ion-label color="primary" style="font-size: 30px; ">All is Required</ion-label>
   <form [formGroup]="LoginForm" (ngSubmit)="Login(LoginForm.value)">
 
@@ -47,4 +99,26 @@
     > Add</ion-button>
 </form>
 
+</ion-content>
+<ion-content [fullscreen]="true">
+  <!-- Mohsen work -->
+  <ion-card>
+    <img src="./assets/imgs/hall1.png" class="card-image"/>
+    <ion-card-content>
+      <ion-card-title> Nine Inch Nails Live </ion-card-title>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <img src="./assets/imgs/hall2.png" class="card-image"/>
+    <ion-card-content>
+      <ion-card-title> Nine Inch Nails Live </ion-card-title>
+    </ion-card-content>
+  </ion-card>
+    <ion-card>
+    <img src="./assets/imgs/hall3.png" class="card-image"/>
+    <ion-card-content>
+      <ion-card-title> Nine Inch Nails Live </ion-card-title>
+    </ion-card-content>
+  </ion-card>
+  <!-- End of Mohsen work -->
 </ion-content>
