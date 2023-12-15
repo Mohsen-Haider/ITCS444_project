@@ -102,25 +102,15 @@
 </form>
 
 </ion-content>
+<!-- Mohsen work Test -->
 <ion-content [fullscreen]="true">
-  <!-- Mohsen work -->
-  <ion-card>
-    <img src="./assets/imgs/hall1.png" class="card-image"/>
+  <div *ngFor="let hall of halls">
+  <ion-card *ngIf="hall.availability">
+    <img [src]="hall.image" class="card-image"/>
     <ion-card-content>
-      <ion-card-title> Nine Inch Nails Live </ion-card-title>
+      <ion-card-title>{{hall.name}}</ion-card-title>
     </ion-card-content>
   </ion-card>
-  <ion-card>
-    <img src="./assets/imgs/hall2.png" class="card-image"/>
-    <ion-card-content>
-      <ion-card-title> Nine Inch Nails Live </ion-card-title>
-    </ion-card-content>
-  </ion-card>
-    <ion-card>
-    <img src="./assets/imgs/hall3.png" class="card-image"/>
-    <ion-card-content>
-      <ion-card-title> Nine Inch Nails Live </ion-card-title>
-    </ion-card-content>
-  </ion-card>
-  <!-- End of Mohsen work -->
+</div>
 </ion-content>
+<!-- End of Mohsen work Test -->

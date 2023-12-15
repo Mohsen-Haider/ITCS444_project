@@ -10,7 +10,9 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page {
-
+// Mohsen Work 
+halls:any=[];
+// Mohsen Work End
   LoginForm:FormGroup;
   newhall:Hall = {};
   constructor(public hallsrv:HallService,public formbuilder:FormBuilder,public firestore:Firestore,public alertCtrl:AlertController) {
@@ -20,7 +22,13 @@ export class Tab2Page {
       numberOfBoothFiting:['',Validators.compose([Validators.required])],
       avaliability:['',Validators.compose([Validators.required])],
       contactTeam:['',Validators.compose([Validators.required])],
-    })
+    });
+        // Mohsen Work
+        this.hallsrv.halls$?.subscribe(res=>{
+          console.log(res);
+          this.halls=res;
+        });
+        // Mohsen Work End
   }//constructor
   ngOnInit(){
          // we use this array to set the limit of the days in the calander 
