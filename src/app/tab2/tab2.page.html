@@ -21,11 +21,20 @@
   </ion-item>
     <div *ngIf="showfilter">
       <ion-item>
-        <ion-label>Sort By:</ion-label>
-        <ion-select [(ngModel)]="sortMethod" interface="action-sheet">
+        <ion-label>availability:</ion-label>
+        <ion-select [(ngModel)]="sortAvHalls" interface="action-sheet">
           <ion-select-option  value="alHalls">All halls</ion-select-option>
           <ion-select-option value="avHalls">Availabe halls</ion-select-option>
           <ion-select-option value="reHalls">Reserved halls</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Capacity:</ion-label>
+        <ion-select interface="action-sheet" (ionChange)="onCapacityChange($event)" value="any">
+          <ion-select-option value="any">Any</ion-select-option>
+          <ion-select-option value="large">Large: <= 400 </ion-select-option>
+          <ion-select-option value="medium">Medium: 200 - 400 </ion-select-option>
+          <ion-select-option value="small">Small: >= 200</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>
@@ -87,7 +96,7 @@
 
     <ion-item>
       <ion-checkbox
-        formControlName="avaliability"
+        formControlN!ame="availability"
       >Avaliable?</ion-checkbox>
     </ion-item>
 
@@ -105,7 +114,7 @@
 <!-- Mohsen work Test -->
 <ion-content [fullscreen]="true">
   <div *ngFor="let hall of halls">
-  <ion-card *ngIf="hall.availability">
+  <ion-card *ngIf="hall.capacity >= lowerCap && hall.capacity <= upperCap && hall.availability">
     <img [src]="hall.image" class="card-image"/>
     <ion-card-content>
       <ion-card-title>{{hall.name}}</ion-card-title>

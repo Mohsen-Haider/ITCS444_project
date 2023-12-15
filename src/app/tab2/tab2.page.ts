@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Hall, HallService } from '../hall.service';
 import { Firestore } from '@angular/fire/firestore';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab2',
@@ -15,7 +15,7 @@ halls:any=[];
 // Mohsen Work End
   LoginForm:FormGroup;
   newhall:Hall = {};
-  constructor(public hallsrv:HallService,public formbuilder:FormBuilder,public firestore:Firestore,public alertCtrl:AlertController) {
+  constructor(public hallsrv:HallService,public formbuilder:FormBuilder,public firestore:Firestore,public alertCtrl:AlertController,private toastCtrl:ToastController) {
     this.LoginForm! = formbuilder.group({
       name:['',Validators.compose([Validators.required])],
       capacity:['',Validators.compose([Validators.required])],
@@ -31,11 +31,13 @@ halls:any=[];
         // Mohsen Work End
   }//constructor
   ngOnInit(){
+     // Mohsen Work
          // we use this array to set the limit of the days in the calander 
     // Call the function to generate the highlighted dates
     this.sevenDays=this.getNextDays(7);
     // we need a method to get the blue and red dates from the firebase instead using this static lists
     this.generateHighlightedDates(this.blueList,this.redList); 
+    // Mohsen Work End
   }
 
   Login(LoginForm:FormGroup){
@@ -75,9 +77,11 @@ halls:any=[];
   showfilter=false;
   result='';
   errorMsg='Enter a Valid Date';
-  sortMethod='alHalls';
+  sortAvHalls='alHalls';
   options:any;
   sevenDays=[];
+  lowerCap=0;// this variable used in Capacity filtering method onCapacityChange
+  upperCap=5000;// this variable used in Capacity filtering method onCapacityChange
   highlightedDates: any[] = [];
   blueList = ['2023-12-20', '2023-12-26', '2023-12-28'];// for testing purpose
   redList = ['2023-12-23', '2023-12-27', '2023-12-29'];// for testing purpose
@@ -92,19 +96,30 @@ halls:any=[];
   }
   // this method will reset the values of sortMethod, start and end days
   resetFiltervalues(){  
-    this.sortMethod='alHalls';
+    this.sortAvHalls='alHalls';
     this.startDate = new Date(this.tdy.getFullYear(), this.tdy.getMonth(), this.tdy.getDate() + 1);
     this. endDate =this.oneWeek;
   }
   // this is alert method it will be used in some of the methods bellow after editing the error message.
-  async dateStatus(){ 
-    const alert = await this.alertCtrl.create({
-      header: 'Information',
-      message: this.errorMsg,
-      buttons: ['Ok'],
-    });
-    await alert.present();
-    }
+  // async dateStatus(){ 
+  //   const alert = await this.alertCtrl.create({
+  //     header: 'Information',
+  //     message: this.errorMsg,
+  //     buttons: ['Ok'],
+  //   });
+  //   await alert.present();
+  //   }
+    // thist method will be used in some of the methods to show information about the data with 
+    // ion toast instead of the alert
+    async dateStatus(){
+      const toast = await this.toastCtrl.create({
+        message:  this.errorMsg,
+        position:"top",
+        duration: 3000
+      });
+      toast.present();
+      }
+  
     // this method created to update the start date then call the check method
   onStartDateChange(event: CustomEvent) {
     this.startDate = new Date(event.detail.value);
@@ -114,6 +129,30 @@ halls:any=[];
   onEndDateChange(event: CustomEvent) {
     this.endDate = new Date(event.detail.value);
     this.checkD()
+  }
+  // this method is used to filter the halls based on the capacity and it 
+  // uses event listener to chane the upper and lower values
+  onCapacityChange(event: CustomEvent){
+    if(event.detail.value=='any')// any > 0
+    {  
+      this.lowerCap=0;
+      this.upperCap=5000;
+    }
+    else if(event.detail.value=='large')// large > 400
+    {  
+      this.lowerCap=400;
+      this.upperCap=5000;
+    }
+    else if(event.detail.value=='medium')// medium > 200 & medium < 400 
+   {  
+      this.lowerCap=201;
+      this.upperCap=399;
+    }
+    else if(event.detail.value=='small') // small <= 200
+    {  
+      this.lowerCap=0;
+      this.upperCap=200;
+    }
   }
   // this method will chack the range of the dates if there's something wrong the dates
   //  will be reset to the default values and an error message will appear
