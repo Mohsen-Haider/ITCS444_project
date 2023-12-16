@@ -1,0 +1,35 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-back-button slot="start"></ion-back-button>
+    <ion-title>hall Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true" *ngIf="hall">
+  <ion-img [src]="hall.image" alt="Hall Image" class="card-image"></ion-img>
+  <ion-list>
+  <ion-item lines="none">
+        <ion-label>Name: </ion-label><ion-text color="secondary"> {{hall.name}} </ion-text>
+  </ion-item>
+  <ion-item lines="none">
+        <ion-label>Capacity: </ion-label><ion-text color="secondary">{{hall.capacity}}</ion-text>
+  </ion-item>
+  <ion-item lines="none">
+        <ion-label>Number Of Booth Fitting: </ion-label><ion-text color="secondary">{{hall.numberOfBoothFitting}}</ion-text>
+  </ion-item>
+  <ion-item lines="none">
+        <ion-button id="open-modal">view More Details</ion-button>
+  </ion-item>
+    </ion-list>
+
+
+    <ion-modal #modal trigger="open-modal" [initialBreakpoint]="0.45" [breakpoints]="[0, 0.25, 0.5, 0.75]">
+      <ng-template>
+      <!-- here is the header of the madal  -->
+<ion-header><ion-toolbar><ion-title>Hall Details</ion-title></ion-toolbar></ion-header> 
+<!-- here is the content of the madal  -->
+<ion-grid><ion-row><ion-col><p>{{hall.description}}</p></ion-col></ion-row></ion-grid>
+            
+      </ng-template>
+    </ion-modal>
+</ion-content>
+  

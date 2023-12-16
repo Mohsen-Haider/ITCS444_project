@@ -14,6 +14,11 @@ const routes: Routes = [
     path: 'halls',
     loadChildren: () => import('./halls/halls.module').then( m => m.HallsPageModule)
   },
+  {
+    path: 'hall-details/:hall',
+    loadChildren: () => import('./hall-details/hall-details.module').then( m => m.HallDetailsPageModule)
+  },
+
 ];
 @NgModule({
   imports: [

@@ -85,7 +85,7 @@
     </ion-item>
 
     <ion-item>
-      <ion-input label="No.Booth fittings:" formControlName="numberOfBoothFiting" clearOnEdit="true"></ion-input>
+      <ion-input label="No.Booth fittings:" formControlName="numberOfBoothFitting" clearOnEdit="true"></ion-input>
     </ion-item>
 
 
@@ -113,7 +113,7 @@
 </ion-content>
 <!-- Mohsen work Test -->
 <ion-content [fullscreen]="true">
-  <div *ngFor="let hall of halls">
+  <div *ngFor="let hall of halls" routerLink="/hall-details/{{hall.id}}">
   <ion-card *ngIf="hall.capacity >= lowerCap && hall.capacity <= upperCap && hall.availability">
     <img [src]="hall.image" class="card-image"/>
     <ion-card-content>

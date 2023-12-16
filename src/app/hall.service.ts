@@ -12,7 +12,7 @@ export interface Hall{
   id?:string;
   name?:string;
   capacity?:string;
-  numberOfBoothFiting?:string;
+  numberOfBoothFitting?:string;
   avaliability?:boolean;
   contactTeam?:string;
 }
@@ -43,7 +43,10 @@ export class HallService {
     const q = query(collection(this.firestore,'Halls'));
     this.halls$ = collectionData(q, {   idField: 'id',  }) as Observable<Hall[]>; //using the query we observe the data
   }
-
+  getHallById(id:any):Observable<Hall>{ // getting data for only one element
+    const noteDocRef = doc(this.firestore,`Halls/${id}`);// The name 'halls' is the same name in the firebase coll.
+    return docData(noteDocRef,{idField:'id'}) as Observable<Hall>; // idField is a keyword and id is a variable get save the id value
+  }
 
   // Create Data in Firestore with Add()
   addHall(hall:Hall): Promise<DocumentReference>{
@@ -60,7 +63,7 @@ export class HallService {
       id:hall.id,
       name:hall.name,
       capacity:hall.capacity,
-      numberOfBoothFiting:hall.numberOfBoothFiting,
+      numberOfBoothFitting:hall.numberOfBoothFitting,
       avaliability:hall.avaliability,
       contactTeam:hall.contactTeam,
          });

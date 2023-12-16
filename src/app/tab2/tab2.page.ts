@@ -19,7 +19,7 @@ halls:any=[];
     this.LoginForm! = formbuilder.group({
       name:['',Validators.compose([Validators.required])],
       capacity:['',Validators.compose([Validators.required])],
-      numberOfBoothFiting:['',Validators.compose([Validators.required])],
+      numberOfBoothFitting:['',Validators.compose([Validators.required])],
       avaliability:['',Validators.compose([Validators.required])],
       contactTeam:['',Validators.compose([Validators.required])],
     });
@@ -52,7 +52,7 @@ halls:any=[];
   add(){
     this.newhall.name = this.LoginForm.controls['name'].value;
     this.newhall.capacity = this.LoginForm.controls['capacity'].value;
-    this.newhall.numberOfBoothFiting= this.LoginForm.controls['numberOfBoothFiting'].value;
+    this.newhall.numberOfBoothFitting= this.LoginForm.controls['numberOfBoothFitting'].value;
     this.newhall.avaliability= this.LoginForm.controls['avaliability'].value;
     this.newhall.contactTeam = this.LoginForm.controls['contactTeam'].value;
     this.hallsrv.addHall(this.newhall).then((res)=>{
